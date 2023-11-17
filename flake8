@@ -1,0 +1,21 @@
+[flake8]
+ignore =
+    # Whitespace before ':'. Align with black, a popular Python code formatter.
+    E203,
+    # Line break occurred before a binary operator. Align with black.
+    W503,
+    # Ignore import warnings
+    F401,
+    F403,
+    F405,
+    # Ignore missing function or module docstrings
+    D100,
+    D103,
+    # Allow for uppercase variable names like P
+    N803,
+    N806
+# align with black
+max-line-length = 88
+enable-extensions = flake8-docstrings
+# we can change this easily with pyment if we want to
+docstring-convention = numpy
