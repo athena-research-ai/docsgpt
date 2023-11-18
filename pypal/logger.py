@@ -23,10 +23,7 @@ class CustomFormatter(logging.Formatter):
         FORMATS (dict): A dictionary mapping log levels to format strings.
     """
 
-    format = (
-        "%(asctime)s - %(name)s - %(levelname)s -"
-        " %(message)s (%(filename)s:%(lineno)d)"
-    )
+    format = "%(asctime)s-" " %(message)s (%(filename)s:%(lineno)d)"
     FORMATS = {
         logging.DEBUG: GREY + format + RESET,
         logging.INFO: GREY + format + RESET,

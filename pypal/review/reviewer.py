@@ -55,6 +55,8 @@ class Reviewer:
         self.file = File(
             self.filepath
         )  # Create a File object for handling file operations
+        logger.info("Hello! I am your code review agent.")
+        logger.warning("I will destroy your shit code \U0001F600")
 
     def review(self):
         """
@@ -69,22 +71,15 @@ class Reviewer:
         # Iterate over functions in the file
         for function in self.file.functions:
             function_name = function.name  # Extract the function name
-
+            logger.critical(f"Currently analyzing this shit : {function_name}")
             # Logging various details about the function
-            function_docstring = ast.get_docstring(function)
-            logger.debug(f"function_name: {function_name}")
-            logger.debug(f"function_docstring {function_docstring}")
-            logger.debug(f"Body: {[function.lineno, function.end_lineno]}")
-            logger.debug(f"Body: {self.file.get_node_body(function)}")
-
             # Review the function code
             code = self.file.get_node_body(function)
             output: OUTPUT_FORMAT = review_agent.review(
                 ElementType.FUNCTION,
                 code,
             )
-            logger.debug(f"output: {output}")
-            print(output)  # Print the review output
+            logger.warning("YOUR DOCSTRING SUCK")
             self.write_review_to_file(
                 function, output
             )  # Write the review to a new file
@@ -118,6 +113,7 @@ class Reviewer:
             ast.get_docstring(function), '""\n' + docstring + '\n""'
         )
 
+        logger.timing(("You can now find a much better file at : " + self.outpath))
         # Write the updated content to the new file
         with open(self.outpath, "w") as file:
             file.write(new_content)

@@ -10,6 +10,7 @@ along with necessary imports and utilities to support the review process.
 from abc import ABC, abstractmethod
 from typing import Dict
 
+from pypal.logger import logger
 from pypal.review.formats import OUTPUT_FORMAT, ElementType
 from pypal.utils.dict import check_format
 
@@ -71,7 +72,7 @@ class Agent(ABC):
         assert check_format(
             review_result, OUTPUT_FORMAT
         ), "Result provided by _review is not compliant"
-
+        logger.debug(f"Review result: {review_result}")
         return review_result
 
     @abstractmethod
