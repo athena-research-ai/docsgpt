@@ -5,7 +5,7 @@ This file includes an example on how to use the code review Agent.
 """
 
 from pypal.review.agents.openai import AgentOpenAI
-from pypal.review.types import ElementType
+from pypal.review.formats import ElementType
 
 review_agent = AgentOpenAI()
 

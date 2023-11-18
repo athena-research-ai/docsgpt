@@ -11,7 +11,7 @@ from typing import Dict
 from openai import OpenAI
 
 from pypal.review.agents.agent import Agent
-from pypal.review.types import ElementType
+from pypal.review.formats import ElementType
 from pypal.utils.file import DIR_CONFIG, DIR_SECRETS, load_yaml_file
 
 
