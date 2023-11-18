@@ -36,6 +36,8 @@ class File:
         with open(self.filepath, "r") as file:
             self.content: str = file.read()  # Read the file's content
 
+        self.__content = self.content
+
         # Parse the file content to an AST (Abstract Syntax Tree)
         self.ast = ast.parse(self.content)
 
@@ -70,7 +72,7 @@ class File:
         """
         # Extract the lines of code corresponding to the node
         return "\n".join(
-            self.content.splitlines()[node.lineno - 1 : node.end_lineno],
+            self.__content.splitlines()[node.lineno - 1 : node.end_lineno],
         )
 
 
