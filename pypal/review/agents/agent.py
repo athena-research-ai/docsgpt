@@ -10,7 +10,7 @@ along with necessary imports and utilities to support the review process.
 from abc import ABC, abstractmethod
 from typing import Dict
 
-from pypal.review.types import OUTPUT_FORMAT, ElementType
+from pypal.review.formats import OUTPUT_FORMAT, ElementType
 from pypal.utils.dict import check_format
 
 
