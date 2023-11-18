@@ -96,25 +96,38 @@ class Reviewer:
             The review output format containing the reviewed docstring.
         """
         # Define the path for the reviewed file
-        self.outpath = self.filepath + "_review.py"
+        self.outpath = self.filepath.split(".py")[0] + "_review.py"
+        indent = function.col_offset  # Indentation level of the function
+
+        # Get the initial docstring of the function, if it exists
+        initial_docstring = ast.get_docstring(function)
 
         # Prepare the new content for the reviewed file
         new_content = self.file.content
 
-        # Extract and format the docstring from the review output
+        # Format the new docstring with proper indentation
         docstring = review["doc_string"]
-        lines = docstring.split("\n")
-        indent = function.col_offset
+        formatted_docstring = '"""\n' + docstring + '\n"""'
+        lines = formatted_docstring.split("\n")
         spaced_lines = [(" " * (indent + 4)) + line for line in lines]
-        docstring = "\n".join(spaced_lines)
+        formatted_docstring = "\n".join(spaced_lines)
 
-        # Replace the old docstring with the new one in the file content
-        new_content = new_content.replace(
-            ast.get_docstring(function), '""\n' + docstring + '\n""'
-        )
+        if initial_docstring is not None:
+            # Replace the old docstring with the new one
+            lines = new_content.splitlines()
+            quotes = [i for i, line in enumerate(lines) if '"""' in line]
+            for idx in reversed(range(quotes[0], quotes[1] + 1)):
+                del lines[idx]
+            lines.insert(quotes[0], formatted_docstring)
+            new_content = "\n".join(lines)
+        else:
+            # Insert the new docstring if the function didn't have one
+            lines = new_content.splitlines()
+            lines.insert(function.lineno, formatted_docstring)
+            new_content = "\n".join(lines)
 
-        logger.timing(("You can now find a much better file at : " + self.outpath))
-        # Write the updated content to the new file
+        logger.timing(f"Find a better file at :{self.outpath}")
+        # Write the updated content with the new docstring to a file
         with open(self.outpath, "w") as file:
             file.write(new_content)
 
