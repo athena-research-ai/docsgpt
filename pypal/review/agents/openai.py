@@ -86,7 +86,8 @@ class AgentOpenAI(Agent):
                     is a docstring compliant documentation
                     of the function that the users send you as message.
 
-                    You should follow the following format for the docstring:
+                    You should follow the following format for the docstring,
+                    make sure to add \n at the end of each line:
 
                     Short description of the function.
 
