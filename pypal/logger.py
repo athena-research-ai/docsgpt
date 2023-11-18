@@ -24,8 +24,8 @@ class CustomFormatter(logging.Formatter):
     """
 
     format = (
-        "%(asctime)s - %(name)s - %(levelname)s -",
-        " %(message)s (%(filename)s:%(lineno)d)",
+        "%(asctime)s - %(name)s - %(levelname)s -"
+        " %(message)s (%(filename)s:%(lineno)d)"
     )
     FORMATS = {
         logging.DEBUG: GREY + format + RESET,
