@@ -1,4 +1,4 @@
 {
-    "doc_string": "Provided docstring of code snippet",
-    "comments": []
+    "docstring": "\nCalculate the nth Fibonacci number using an iterative approach.\n\nThis function computes the nth Fibonacci number in a sequence where the first\ntwo numbers are 0 and 1, respectively, and each subsequent number is the sum\nof the two preceding ones. This implementation uses an iterative approach\nand is designed to handle non-negative integer inputs.\n\nParameters\n----------\nn : int\n    The position in the Fibonacci sequence to compute. Must be a non-negative integer.\n    When n is 0, the function returns 0, and for n = 1, it returns 1.\n\nReturns\n-------\nint\n    The nth Fibonacci number.\n\nRaises\n------\nValueError\n    If `n` is not a non-negative integer.\n\nExamples\n--------\n>>> badFibonacci(0)\n0\n\n>>> badFibonacci(1)\n1\n\n>>> badFibonacci(10)\n55\n\nNotes\n-----\nThis function uses a simple iterative approach to calculate the Fibonacci number,\nwhich can be inefficient for very large values of `n` due to the increasing number\nof iterations. For large `n`, other methods such as matrix exponentiation might\nbe more efficient.\n",
+    "comments": ""
 }
