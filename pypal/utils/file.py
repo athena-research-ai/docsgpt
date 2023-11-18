@@ -4,28 +4,16 @@ File utils.
 Utilities to handle yaml, and json files.
 """
 
+from pathlib import Path
+from typing import Dict
+
 import yaml
 
-
-def read_file_as_string(file_path: str) -> str:
-    """Read file as a single string.
-
-    Parameters
-    ----------
-    file_path : str
-        Path of the file.
-
-    Returns
-    -------
-    str
-        Contents of the file as a string.
-    """
-    with open(file_path, "r") as file:
-        data = file.read()
-    return data
+DIR_CONFIG = Path("configs")
+DIR_SECRETS = Path("keys")
 
 
-def load_yaml_file(file_path):
+def load_yaml_file(file_path: Path) -> Dict:
     """
     Load the contents of a YAML file into a Python dictionary.
 

@@ -58,8 +58,8 @@ class ElementType(Enum):
 #     type (ElementType): The type of code element.
 #     content (str): The actual code content as a string.
 INPUT_FORMAT = {
-    "type": ElementType.FUNCTION,
-    "content": "code",
+    "type": ElementType,
+    "content": str,
 }
 
 # Dictionary representing the format of the output data.
@@ -73,6 +73,6 @@ INPUT_FORMAT = {
 #     doc_string (str): The docstring of the reviewed code snippet.
 #     comments (list): A list of comments related to the code review.
 OUTPUT_FORMAT = {
-    "doc_string": "Provided docstring of code snippet",
-    "comments": [],
+    "doc_string": str,
+    # "comments": [],
 }

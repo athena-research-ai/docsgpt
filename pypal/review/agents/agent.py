@@ -72,6 +72,8 @@ class Agent(ABC):
             review_result, OUTPUT_FORMAT
         ), "Result provided by _review is not compliant"
 
+        return review_result
+
     @abstractmethod
     def _review(self, type: ElementType, content: str) -> Dict:
         """
