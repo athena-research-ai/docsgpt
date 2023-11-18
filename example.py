@@ -4,16 +4,10 @@ Example usage of AgentOpenAI.
 This file includes an example on how to use the code review Agent.
 """
 
-from pypal.review.agents.openai import AgentOpenAI
-from pypal.review.formats import ElementType
+from pypal.review.reviewer import Reviewer
 
-review_agent = AgentOpenAI()
+# Fiel you want to document
+filepath: str = "pypal/mock_data/test_function.py"
 
-code = """
-    def load_yaml_file(file_path):
-        with open(file_path, 'r') as file:
-            data = yaml.safe_load(file)
-        return data
-"""
-
-print(review_agent.review(ElementType.FUNCTION, code))
+reviewer = Reviewer(filepath)
+reviewer.review()
