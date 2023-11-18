@@ -85,13 +85,7 @@ class AgentOpenAI(Agent):
 
         return [
             {
-                "role": "system",
-                "content": """
-                    You are a helpful assistant designed to output JSON.
-                """,
-            },
-            {
-                "role": "system",
+                "role": "user",
                 "content": """
                     The JSON contains a key 'doc_string' and
                     the associated value is a docstring compliant documentation
