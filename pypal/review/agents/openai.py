@@ -67,18 +67,12 @@ class AgentOpenAI(Agent):
 
     def _get_system_messages(self, type: ElementType) -> Dict:
         """
-        Generate system messages.
+        Get system messages for OpenAI model.
 
         Args:
             type (ElementType):
-                The type of element for which messages are being generated.
-
-        Returns:
-            Dict:
-                A list of system messages to be sent to the OpenAI model.
-
-        Raises:
-            AssertionError: If the ElementType is not supported.
+                The type of element to be reviewed. It determines the nature
+                of the review process.
         """
         if ElementType.FUNCTION != type:
             assert False, "Not implemented yet!"
@@ -87,9 +81,23 @@ class AgentOpenAI(Agent):
             {
                 "role": "user",
                 "content": """
-                    The JSON contains a key 'doc_string' and
-                    the associated value is a docstring compliant documentation
+                    Return a single JSON file that contains a
+                    key 'doc_string' and the associated value
+                    is a docstring compliant documentation
                     of the function that the users send you as message.
+
+                    You should follow the following format for the docstring:
+
+                    Short description of the function.
+
+                    Long description of the function.
+
+                    Args:
+                        arg1 (type): Description of arg1.
+                        arg2 (type): Description of arg2.
+
+                    Returns:
+                        type: Description of return value.
                 """,
             },
         ]
