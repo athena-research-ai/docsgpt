@@ -5,6 +5,7 @@ See Agent.
 """
 
 import json
+import os
 from pathlib import Path
 from typing import Dict
 
@@ -12,7 +13,7 @@ from openai import OpenAI
 
 from pypal.review.agents.agent import Agent
 from pypal.review.formats import ElementType
-from pypal.utils.file import DIR_CONFIG, DIR_SECRETS, load_yaml_file
+from pypal.utils.file import DIR_CONFIG, load_yaml_file
 
 
 class AgentOpenAI(Agent):
@@ -29,15 +30,12 @@ class AgentOpenAI(Agent):
         Loads necessary secrets and configurations for the OpenAI client.
         """
         super().__init__()
-        secrets = load_yaml_file(
-            DIR_SECRETS / Path("openai") / Path("secrets.yaml"),
-        )
 
         self.config = load_yaml_file(DIR_CONFIG / Path("openai.yaml"))
 
         self.client = OpenAI(
-            organization=secrets["org"],
-            api_key=secrets["key"],
+            organization=os.environ.get("OPENAI_ORGANIZATION"),
+            api_key=os.environ.get("OPENAI_API_KEY"),
         )
 
     def _review(self, type: ElementType, content: str) -> Dict:

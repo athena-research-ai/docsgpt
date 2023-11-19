@@ -47,5 +47,8 @@ jobs:
         pip install -r requirements.txt
 
     - name: Check docstrings
+      env:
+        OPENAI_ORGANIZATION: ${{ github.secret.OPENAI_ORGANIZATION }}
+        OPENAI_API_KEY: ${{ github.secret.OPENAI_API_KEY }}
       run: |
         python main.py -f ${{ needs.get-changed-files.outputs.modified }}
