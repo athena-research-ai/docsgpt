@@ -46,7 +46,7 @@ def main():
     None
     """
     parser = argparse.ArgumentParser(description="Perform code review.")
-    parser.add_argument("-f", "--filepaths", nargs="+", help="File paths to process")
+    parser.add_argument("-f", "--filepaths", nargs="*", help="File paths to process")
     parser.add_argument(
         "-c",
         "--changes",
