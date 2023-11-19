@@ -43,14 +43,17 @@ class File:
 
         # Extract functions and classes from the AST
         self.functions = [
-            node for node in self.ast.body if isinstance(node, ast.FunctionDef)
+            node for node in ast.walk(self.ast) if isinstance(node, ast.FunctionDef)
         ]
         self.classes = [
-            node for node in self.ast.body if isinstance(node, ast.ClassDef)
+            node for node in ast.walk(self.ast) if isinstance(node, ast.ClassDef)
         ]
         self.methods = (
             []
         )  # Placeholder for methods, can be populated similarly if needed
+        # Get all objects
+        self.objects: list = self.functions + self.classes
+        self.sorted_objects = sorted(self.objects, key=lambda obj: obj.lineno)
 
     def get_node_body(self, node) -> str:
         """
