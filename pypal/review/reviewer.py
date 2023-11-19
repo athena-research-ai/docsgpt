@@ -40,9 +40,20 @@ from pypal.utils.file import File
 class Reviewer:
     """Class to handle the review process of Python functions in a file."""
 
-    def __init__(self, filepath: str) -> None:
+    def __init__(self) -> None:
+        """Initialize the Reviewer class with a specific file."""
+        self.review_agent = AgentOpenAI()  # Initialize the review agent
+        logger.info("Hello! I am your code review agent.")
+        logger.warning("I will destroy your shit code \U0001F600")
+        self.write_offset = 0
+
+    def review(self, filepath: str):
         """
-        Initialize the Reviewer class with a specific file.
+        Review each function in the file.
+
+        This method uses an AI-based review agent to review
+        each function in the file and then writes the review
+        output back to a new file.
 
         Parameters
         ----------
@@ -54,19 +65,6 @@ class Reviewer:
         self.file = File(
             self.filepath
         )  # Create a File object for handling file operations
-        logger.info("Hello! I am your code review agent.")
-        logger.warning("I will destroy your shit code \U0001F600")
-        self.write_offset = 0
-
-    def review(self):
-        """
-        Review each function in the file.
-
-        This method uses an AI-based review agent to review
-        each function in the file and then writes the review
-        output back to a new file.
-        """
-        review_agent = AgentOpenAI()  # Initialize the AI-based review agent
 
         # Iterate over functions in the file
         for function in self.file.sorted_objects:
@@ -77,7 +75,7 @@ class Reviewer:
             code = self.file.get_node_body(function)
             logger.warning(code)
             try:
-                output: OUTPUT_FORMAT = review_agent.review(
+                output: OUTPUT_FORMAT = self.review_agent.review(
                     ElementType.FUNCTION,
                     code,
                 )
