@@ -74,21 +74,25 @@ class AgentOpenAI(Agent):
                 The type of element to be reviewed. It determines the nature
                 of the review process.
         """
-        if ElementType.FUNCTION != type:
-            assert False, "Not implemented yet!"
+        base_message = {
+            "role": "user",
+            "content": """
+                Return a single JSON file that contains a
+                key 'doc_string' and the associated value
+                is a numpy docstring compliant documentation
+                of the function that the users send you as message.
 
-        return [
-            {
+                You should follow the following format for the docstring,
+                    make sure to add \n at the end of each line:
+                """,
+        }
+
+        specific_message = None
+
+        if ElementType.FUNCTION == type or ElementType.METHOD == type:
+            specific_message = {
                 "role": "user",
                 "content": """
-                    Return a single JSON file that contains a
-                    key 'doc_string' and the associated value
-                    is a docstring compliant documentation
-                    of the function that the users send you as message.
-
-                    You should follow the following format for the docstring,
-                    make sure to add \n at the end of each line:
-
                     Short description of the function.
 
                     Long description of the function.
@@ -100,5 +104,26 @@ class AgentOpenAI(Agent):
                     Returns:
                         type: Description of return value.
                 """,
-            },
-        ]
+            }
+        elif ElementType.CLASS == type:
+            specific_message = {
+                "role": "user",
+                "content": """
+                    Short description of the class.
+
+                    Long description of the class.
+                """,
+            }
+        elif ElementType.FILE == type:
+            specific_message = {
+                "role": "user",
+                "content": """
+                    Short description of the scope of file.
+
+                    Long description of the file.
+                """,
+            }
+        else:
+            assert False, "Not implemented yet!"
+
+        return [base_message, specific_message]
