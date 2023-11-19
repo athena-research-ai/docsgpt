@@ -47,7 +47,7 @@ def indent_docstring(docstring: str, indent: int):
     """
     # Add indentation to docstrings
     lines = docstring.split('\n')
-    spaced_lines = [' ' * indent + line for line in lines]
+    spaced_lines = [' ' * indent + line.strip() for line in lines]
     if len(lines) > 1:
         spaced_lines = [''] + spaced_lines + [' ' * indent]
     formatted_docstring = '\n'.join(spaced_lines)
