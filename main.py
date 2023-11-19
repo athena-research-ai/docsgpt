@@ -61,7 +61,7 @@ def main():
         if len(args.filepaths) == 1 and os.path.isdir(args.filepaths[0]):
             filepaths = get_all_files(args.filepaths[0])
         elif len(args.filepaths) == 1 and os.path.isfile(args.filepaths[0]):
-            filepaths = args.filepaths[0]
+            filepaths = args.filepaths
         else:
             filepaths = args.filepaths
     elif args.changes:
@@ -73,7 +73,6 @@ def main():
         )
 
     for file in filepaths:
-        print(file)
         reviewer.review(file)
         pass
 

@@ -121,7 +121,8 @@ class Reviewer:
             The path to the file which contains the
             Python functions to be reviewed.
         """
-        if filepath.split(".") != ".py": 
+        if filepath.split(".")[-1] != "py":
+            print(f"Extension not supported ({filepath.split('.')[-1]})")
             return
         source = open(filepath).read()
         tree = ast.parse(source)
