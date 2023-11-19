@@ -17,7 +17,8 @@ jobs:
       run: |
         echo "::set-output name=all::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})"
         echo "::set-output name=added::$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.event.after }})"
-        echo "::set-output name=modified::$(git diff --name-only --diff-filter=M ${{ github.event.before }} ${{ github.event.after }})"
+        modified_files=$(git diff --name-only --diff-filter=M ${{ github.event.before }} ${{ github.event.after }} | xargs)
+        echo "::set-output name=modified::$modified_files"
         echo "::set-output name=deleted::$(git diff --name-only --diff-filter=D ${{ github.event.before }} ${{ github.event.after }})"
 
     # Example step using the output
