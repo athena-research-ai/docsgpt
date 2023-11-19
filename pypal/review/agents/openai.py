@@ -77,8 +77,13 @@ class AgentOpenAI(Agent):
             "content": """
                 Return a single JSON file that contains a
                 key 'doc_string' and the associated value
-                is a numpy docstring compliant documentation
+                is a numpy style docstring compliant documentation
                 of the function that the users send you as message.
+
+                If the element already has a docstring which is compliant
+                and correct, you should return the same docstring.
+                Otherwise, you should return a docstring that is compliant
+                and correct.
 
                 You should follow the following format for the docstring,
                     make sure to add \n at the end of each line:
