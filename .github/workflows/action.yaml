@@ -47,7 +47,9 @@ jobs:
         OPENAI_ORGANIZATION: ${{ secrets.OPENAI_ORGANIZATION }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
-        python main.py -f ${{ steps.files.outputs.all }}
+        python main.py -f ${{ steps.files.outputs.modified }}
+        python main.py -f ${{ steps.files.outputs.added }}
+
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
