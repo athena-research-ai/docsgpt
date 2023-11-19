@@ -51,4 +51,4 @@ jobs:
         OPENAI_ORGANIZATION: ${{ github.secret.OPENAI_ORGANIZATION }}
         OPENAI_API_KEY: ${{ github.secret.OPENAI_API_KEY }}
       run: |
-        python main.py -f ${{ needs.get-changed-files.outputs.modified }}
+        python main.py -f ${{ needs.get-changed-files.outputs.all }}
