@@ -40,14 +40,14 @@ from pypal.utils.file import File
 class Reviewer:
     """
     Class to handle the review process of Python functions in a file.
-    
+
         Short description of the function.
-    
+
         Long description of the function.
-    
+
         Args:
             filepath (str): The path to the file which contains the Python functions to be reviewed.
-    
+
         Returns:
             None: No return value.
     """
@@ -55,13 +55,13 @@ class Reviewer:
     def __init__(self, filepath: str) -> None:
         """
         Initialize the Reviewer class with a specific file.
-        
+
         Parameters
         ----------
         filepath : str
             The path to the file which contains the
             Python functions to be reviewed.
-        
+
         Returns
         -------
         None
@@ -80,12 +80,12 @@ class Reviewer:
         Review each function in the file.
         """
         Review each function in the file.
-        
+
         This method uses an AI-based review agent to review each function in the file and then writes the review output back to a new file.
-        
+
         Args:
             self: Type of self. Description of self.
-        
+
         Returns:
             OUTPUT_FORMAT: Description of return value.
         """
@@ -125,7 +125,7 @@ class Reviewer:
         review : OUTPUT_FORMAT
             The review output format containing the reviewed docstring.
         """
-        
+
         # Define the path for the reviewed file
         self.outpath = self.filepath.split(".py")[0] + "_review.py"
 
@@ -161,7 +161,7 @@ class Reviewer:
 
     @staticmethod
     def format_docstring(function, docstring:str):
-        # Add triple quotes to docstring and line breaks 
+        # Add triple quotes to docstring and line breaks
         formatted_docstring = '"""\n' + docstring + '\n"""'
         # Add indentation to docstrings
         function_indent = function.col_offset
@@ -176,7 +176,7 @@ class Reviewer:
         spaced_lines = [(" " * (indent)) + line for line in lines]
         formatted_docstring = "\n".join(spaced_lines)
         return formatted_docstring
-    
+
     def clear_docstring(self, lines, function):
         """
         Clear the docstring of a function.
