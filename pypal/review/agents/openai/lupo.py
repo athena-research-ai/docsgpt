@@ -1,2 +1,2 @@
 def urlo():
-    print("I am lupo duca new deal")
+    print("I am lupo duca the new berlusca")

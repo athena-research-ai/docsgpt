@@ -44,8 +44,8 @@ jobs:
 
     - name: Check docstrings
       env:
-        OPENAI_ORGANIZATION: ${{ github.secret.OPENAI_ORGANIZATION }}
-        OPENAI_API_KEY: ${{ github.secret.OPENAI_API_KEY }}
+        OPENAI_ORGANIZATION: ${{ secrets.OPENAI_ORGANIZATION }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         python main.py -f ${{ steps.files.outputs.all }}
 
