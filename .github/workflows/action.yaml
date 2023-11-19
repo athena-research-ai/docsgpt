@@ -1,9 +1,9 @@
-name: Changed Files
+name: AutoDocstring
 
 on: [push, pull_request]
 
 jobs:
-  get-changed-files:
+  autodocstring:
     runs-on: ubuntu-latest
 
     steps:

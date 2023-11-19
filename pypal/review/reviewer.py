@@ -121,6 +121,8 @@ class Reviewer:
             The path to the file which contains the
             Python functions to be reviewed.
         """
+        if filepath.split(".") != ".py": 
+            return
         source = open(filepath).read()
         tree = ast.parse(source)
         for transformer in [
