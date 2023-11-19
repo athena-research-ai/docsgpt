@@ -9,5 +9,5 @@ from pypal.review.reviewer import Reviewer
 # Fiel you want to document
 filepath: str = "pypal/mock_data/test_function.py"
 
-reviewer = Reviewer(filepath)
-reviewer.review()
+reviewer = Reviewer()
+reviewer.review(filepath)
