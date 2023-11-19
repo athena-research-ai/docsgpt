@@ -46,11 +46,7 @@ def main():
     None
     """
     parser = argparse.ArgumentParser(description="Perform code review.")
-    parser.add_argument(
-        "-f",
-        "--filepath",
-        help="Specify a file to process.",
-    )
+    parser.add_argument("-f", "--filepaths", nargs="+", help="File paths to process")
     parser.add_argument(
         "-c",
         "--changes",
@@ -61,11 +57,13 @@ def main():
 
     filepaths = []
 
-    if args.filepath:
-        if os.path.isfile(args.filepath):
-            filepaths = args.filepath
+    if args.filepaths:
+        if len(args.filepaths) == 1 and os.path.isdir(args.filepaths[0]):
+            filepaths = get_all_files(args.filepaths[0])
+        elif len(args.filepaths) == 1 and os.path.isfile(args.filepaths[0]):
+            filepaths = args.filepaths[0]
         else:
-            filepaths = get_all_files(args.filepath)
+            filepaths = args.filepaths
     elif args.changes:
         filepaths = get_changed_files()
     else:
