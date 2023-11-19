@@ -5,8 +5,9 @@ Utilities to handle yaml, and json files.
 """
 
 import ast
+import os
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 import yaml
 
@@ -77,6 +78,27 @@ class File:
         return "\n".join(
             self.__content.splitlines()[node.lineno - 1 : node.end_lineno],
         )
+
+
+def get_files(directory: Path, extension: str = None) -> List[Path]:
+    """
+    Find all .py files in the specified directory and its subdirectories.
+
+    :param directory: The root directory to search in.
+    :return: A list of paths to .py files.
+    """
+    assert extension is not None, "Please specify an extension"
+    assert extension.startswith("."), "Please specify an extension with a dot"
+    if extension != ".py":
+        raise NotImplementedError("Only .py files are supported at the moment")
+
+    py_files = []
+    for dirpath, _, filenames in os.walk(directory):
+        for file in filenames:
+            if file.endswith(extension):
+                full_path = os.path.join(dirpath, file)
+                py_files.append(full_path)
+    return py_files
 
 
 def load_yaml_file(file_path: Path) -> Dict:

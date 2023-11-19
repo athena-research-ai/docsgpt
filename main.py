@@ -16,9 +16,15 @@ get_all_files : Returns a list of all files in the repo.
 get_changed_files : Returns a list of all files that have been changed.
 """
 
+
 import argparse
+import os
+from pathlib import Path
+
+from git import Repo
 
 from pypal.review.reviewer import Reviewer
+from pypal.utils.file import get_files
 
 reviewer = Reviewer()
 
@@ -46,12 +52,6 @@ def main():
         help="Specify a file to process.",
     )
     parser.add_argument(
-        "-a",
-        "--all",
-        action="store_true",
-        help="Process repo.",
-    )
-    parser.add_argument(
         "-c",
         "--changes",
         action="store_true",
@@ -61,10 +61,11 @@ def main():
 
     filepaths = []
 
-    if args.file:
-        filepaths = [args.filepath]
-    elif args.all:
-        filepaths = get_all_files()
+    if args.filepath:
+        if os.path.isfile(args.filepath):
+            filepaths = args.filepath
+        else:
+            filepaths = get_all_files(args.filepath)
     elif args.changes:
         filepaths = get_changed_files()
     else:
@@ -74,10 +75,11 @@ def main():
         )
 
     for file in filepaths:
-        reviewer.review(file)
+        # reviewer.review(file)
+        pass
 
 
-def get_all_files():
+def get_all_files(dir: Path):
     """
     Get all files in the repo.
 
@@ -86,7 +88,7 @@ def get_all_files():
     list
         A list of all files in the repo.
     """
-    return []
+    return get_files(dir, extension=".py")
 
 
 def get_changed_files():
@@ -98,7 +100,18 @@ def get_changed_files():
     list
         A list of all files that have been changed in the latest commit.
     """
-    return []
+    repo = Repo(os.getcwd())
+    changed_files = []
+
+    # Untracked files
+    changed_files.extend(repo.untracked_files)
+
+    # Modified and staged files
+    diffs = repo.index.diff(None) + repo.index.diff("HEAD")
+    for diff in diffs:
+        changed_files.append(diff.a_path)
+
+    return list(set(changed_files))
 
 
 if __name__ == "__main__":
