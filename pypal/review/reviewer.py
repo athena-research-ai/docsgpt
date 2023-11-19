@@ -132,5 +132,5 @@ class Reviewer:
 
         new_source = ast.unparse(tree)
 
-        with open(filepath.split(".py")[0] + "_review.py", "w") as fd:
+        with open(filepath, "w") as fd:
             fd.write(new_source)

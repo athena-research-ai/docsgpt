@@ -74,7 +74,7 @@ def main():
 
     for file in filepaths:
         print(file)
-        # reviewer.review(file)
+        reviewer.review(file)
         pass
 
 
