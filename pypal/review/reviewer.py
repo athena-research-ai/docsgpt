@@ -27,9 +27,9 @@ Dependencies:
     - pypal.review.formats: Defines review process formats.
     - pypal.utils.file: Manages file operations.
 """
-import ast
-from _ast import Module
 from typing import Any
+
+import ast_comments as astcom
 
 from pypal.logger import logger
 from pypal.review.agents.openai import AgentOpenAI
@@ -48,14 +48,14 @@ def indent_docstring(docstring: str, indent: int):
     return formatted_docstring
 
 
-class ReviewerDocstring(ast.NodeTransformer):
+class ReviewerDocstring(astcom.NodeTransformer):
     def __init__(self, source, review_agent) -> None:
         super().__init__()
         self.source = source
         self.review_agent = review_agent
 
     def make_docstring(self, node, type):
-        code = ast.get_source_segment(self.source, node)
+        code = astcom.get_source_segment(self.source, node)
         # Review the function code
         logger.warning("\n" + code)
         try:
@@ -72,11 +72,11 @@ class ReviewerDocstring(ast.NodeTransformer):
         function_indent = node.col_offset
         docstring = indent_docstring(docstring, function_indent + 4)
 
-        return ast.Expr(value=ast.Str(docstring))
+        return astcom.Expr(value=astcom.Str(docstring))
 
     def review_node(self, node, type):
         new_docstring_node = self.make_docstring(node, type)
-        if ast.get_docstring(node):
+        if astcom.get_docstring(node):
             # Assumes the existing docstring is the first node
             # in the function body.
             node.body[0] = new_docstring_node
@@ -96,7 +96,7 @@ class ReviewerDocstringClass(ReviewerDocstring):
 
 
 class ReviewerDocstringModule(ReviewerDocstring):
-    def visit_Module(self, node: Module) -> Any:
+    def visit_Module(self, node) -> Any:
         return self.review_node(node, ElementType.FILE)
 
 
@@ -125,15 +125,15 @@ class Reviewer:
             print(f"Extension not supported ({filepath.split('.')[-1]})")
             return
         source = open(filepath).read()
-        tree = ast.parse(source)
+        tree = astcom.parse(source)
         for transformer in [
             ReviewerDocstringFunction(source, self.review_agent),
             ReviewerDocstringClass(source, self.review_agent),
         ]:
             transformer.visit(tree)
-        ast.fix_missing_locations(tree)
+        astcom.fix_missing_locations(tree)
 
-        new_source = ast.unparse(tree)
+        new_source = astcom.unparse(tree)
 
         with open(filepath, "w") as fd:
             fd.write(new_source)
